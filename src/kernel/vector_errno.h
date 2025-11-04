@@ -1,0 +1,28 @@
+/* VectorOS
+ * File name		: kernel/vector_errno.h
+ * Creation date	: 2025/11/14 0:33 (Tues)
+ */
+
+#ifndef VECTOR_ERRNO_H
+#define VECTOR_ERRNO_H
+
+#define KERNEL_EXIT_SUCCESS			 0
+#define KERNEL_EXIT_FAILURE			-1
+
+#define KERNEL_SAVE_WORKS_ORDER		-2
+
+#define KERNEL_FILE_OPEN_FAILURE	-3
+#define KERNEL_FILE_READ_FAILURE	-4
+#define KERNEL_FILE_WRITE_FAILURE	-5
+
+#define KERNEL_DEVICE_OPEN_FAILURE	-6
+#define KERNEL_DEVICE_READ_FAILURE	-7
+#define KERNEL_DEVICE_WRITE_FAILURE	-8
+
+#define KERNEL_BAD_PERMITTION		-9
+#define KERNEL_FILE_NOT_EXIST		-10
+
+#define KERNEL_STANDABLE_WARN		 1
+#define KERNEL_WAIT_WARN			 2
+
+#endif
