@@ -1,6 +1,6 @@
 /* VectorOS
  * File name		: kernel/vector_kernel.c 
- * Creation date	: 2025/11/14 00:18 (Tues)
+ * Creation date	: 2025/11/04 00:18 (Tues)
  */
 
 #include "vector_kernel.h"

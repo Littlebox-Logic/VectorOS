@@ -1,6 +1,6 @@
 /* VectorOS
  * File name		: kernel/vector_stdio.c
- * Creation date	: 2025/11/14 00:30 (Tues)
+ * Creation date	: 2025/11/04 00:30 (Tues)
  */
 
 #include "vector_stdio.h"

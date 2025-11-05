@@ -1,10 +1,12 @@
 /* VectorOS
  * File name		: boot/efi_loader.h
- * Creation date	: 2025/11/14 10:29 (Tues)
+ * Creation date	: 2025/11/04 10:29 (Tues)
  */
 
 #ifndef EFI_LOADER_H
 #define EFI_LOADER_H
+
+#include <efi.h>
 
 /* Basic kernel info. */
 typedef struct

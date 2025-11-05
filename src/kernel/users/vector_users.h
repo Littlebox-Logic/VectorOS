@@ -1,6 +1,6 @@
 /* VectorOS
  * File name		: kernel/users/vector_users.h
- * Creation date	: 2025/11/14 10:38 (Tues)
+ * Creation date	: 2025/11/04 10:38 (Tues)
  */
 
 #ifndef VECTOR_USERS_H

@@ -1,6 +1,6 @@
 # VectorOS
 # File name		: Makefile 
-# Creation date	: 2025/11/14 00:04 (Tues)
+# Creation date	: 2025/11/04 00:04 (Tues)
 
 CC = gcc
 LD = ld

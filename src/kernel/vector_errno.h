@@ -1,6 +1,6 @@
 /* VectorOS
  * File name		: kernel/vector_errno.h
- * Creation date	: 2025/11/14 0:33 (Tues)
+ * Creation date	: 2025/11/04 0:33 (Tues)
  */
 
 #ifndef VECTOR_ERRNO_H
