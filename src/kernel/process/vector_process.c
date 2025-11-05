@@ -11,6 +11,11 @@ Pid_Index pid = 0;
 
 /* Do one thing, and do it well. */
 
+int init_process(Process pinit)
+{
+	process_fork(pinit, 0, 0);
+}
+
 int process_fork(Process process, Pid_Index master_pid, User_Index user, Process_Level level)
 {
 	if ((process = (Process)kernel_malloc(sizeof(_process))))
