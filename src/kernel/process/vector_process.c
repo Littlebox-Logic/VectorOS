@@ -7,7 +7,13 @@
 #include "../vector_errno.h"
 #include "../memory/vector_malloc.h"
 
-Pid_Index pid = 0;
+#include <stdbool.h>
+
+Pid_Index		_pid_pionner = 0;
+Pid_Index		*_pid_recycle_pool = NULL;
+Proc_Vec_Table	_process_vector_table[PROCESS_CAPACITY] = {NULL};
+
+bool _pid_register_lock = false;
 
 /* Do one thing, and do it well. */
 
@@ -16,17 +22,70 @@ int init_process(Process pinit)
 	process_fork(pinit, 0, 0);
 }
 
-int process_fork(Process process, Pid_Index master_pid, User_Index user, Process_Level level)
+int process_fork(Process process, Pid_Index master_pid, User_Index user, enum Process_Level level, enum Process_Priority priority)
 {
-	if ((process = (Process)kernel_malloc(sizeof(_process))))
+	Pid_Recycle_Pool *temp_pid_node;
+
+	if ((process = (Process)kernel_malloc(sizeof(_process))))	return KERNEL_EXIT_FAILURE;
+
+	while (true)
 	{
-		return KERNEL_EXIT_FAILURE;
+		if (!_pid_register_lock)
+		{
+			_pid_register_lock = true;
+
+			if (_pid_recycle_pool)
+			{
+				process -> pid		= _pid_recycle_pool -> pid;
+				temp_pid_node		= _pid_recycle_pool;
+				_pid_recycle_pool	= _pid_recycle_pool -> next;
+				kernel_free(temp_pid_node);
+			}
+			else	process -> pid = pid_pioneer ++;
+
+			_pid_register_lock = false;
+			break;
+		}
 	}
 
-	process->pid		= get_new_pid();
-	process->master_pid	= master_pid;
-	process->user		= user;
-	process->level		= level;
+	process -> master_pid	= master_pid;
+	process -> user			= user;
+	process -> level		= level;
+	process -> priority		= priority;
+	process -> state		= PROC_ACTIVE;
+
+	_process_vector_table[process -> pid] = process;
+
+	return KERNEL_EXIT_SUCCESS;
+}
+
+int process_destroy(Pid_Index pid)
+{
+	Pid_Recycle_Pool *new_pid_node;
+
+	while (true)
+	{	
+		if (!_pid_register_lock)
+		{
+			_pid_register_lock = true;
+
+			if (kernel_free(_process_vector_table[pid]))	return KERNEL_EXIT_FAILURE;
+			_process_vector_table[pid] = NULL;
+
+			if (pid == _pid_pioneer - 1)	_pid_pioneer --;
+			else
+			{
+				if ((new_pid_node = (Pid_Recycle_Pool)kernel_malloc(sizeof(_Pid_Recycle_Pool))))
+					return KERNEL_EXIT_FAILURE;
+
+				new_pid_node -> pid		= pid;
+				new_pid_node -> next	= _pid_recycle_pool;
+				_pid_recycle_pool		= _pid_new_node;
+			}
+
+			_pid_register_lock = false;
+		}
+	}
 
 	return KERNEL_EXIT_SUCCESS;
 }

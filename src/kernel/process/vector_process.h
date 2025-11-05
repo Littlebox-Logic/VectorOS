@@ -8,6 +8,8 @@
 
 #include <stdint.h>
 
+#define PROCESS_CAPACITY 65536
+
 enum Process_Priority
 {
 	PRIO_REALTIME	= 0;
@@ -33,7 +35,7 @@ enum Process_State
 	PROC_TERMINATED	= 3;
 }
 
-typedef uint32_t Pid_Index;
+typedef uint16_t Pid_Index;
 typedef uint16_t User_Index;
 
 typedef struct
@@ -44,9 +46,22 @@ typedef struct
 	enum Process_Priority	priority;
 	enum Process_Level		level;
 	enum Process_State		state;
-	const char *path;
+	const char path[256];
 }	_Process, *Process;
 
+typedef struct _Pid_Recycle_Pool_Struct
+{
+	Pid_Index pid;
+	struct _Pid_Recycle_Pool_Struct next;
+}	_Pid_Recycle_Pool, *Pid_Recycle_Pool;
+
+typedef Process Proc_Vec_Table;
+
+extern Pid_Index		_proc_pioneer;
+extern Pid_Index		*_pid_recycle_pool; 
+extern Proc_Vec_Table	_process_vector_table[PROCESS_CAPACITY];
+
 int process_fork(Process);
+int process_destroy(Pid_Index);
 
 #endif
