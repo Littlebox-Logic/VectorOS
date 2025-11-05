@@ -41,7 +41,16 @@ int process_fork(Process process, Pid_Index master_pid, User_Index user, enum Pr
 				_pid_recycle_pool	= _pid_recycle_pool -> next;
 				kernel_free(temp_pid_node);
 			}
-			else	process -> pid = pid_pioneer ++;
+			else
+			{
+				if (pid_pioneer == PROCESS_CAPACITY - 1)
+				{
+					kernel_free(process);
+					_pid_register_lock = false;
+					return KERNEL_STANDABLE_WARN;
+				}
+				process -> pid = pid_pioneer ++;
+			}
 
 			_pid_register_lock = false;
 			break;
