@@ -1,6 +1,6 @@
 /* VectorOS
  * File name		: cstdlib/math.h
- * Creation date	: 2025/11/05 14:13 (Tues)
+ * Creation date	: 2025/11/05 14:13 (Wed)
  */
 
 #ifndef C_MATH_H

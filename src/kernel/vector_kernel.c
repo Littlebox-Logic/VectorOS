@@ -6,7 +6,7 @@
 #include "vector_kernel.h"
 #include "vector_errno.h"
 
-void kernel_main(Kernel_Boot_Info kernel_boot_info)
+int kernel_main(Kernel_Boot_Info kernel_boot_info)
 {
-	;
+	return 0;
 }

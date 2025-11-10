@@ -10,7 +10,10 @@
 
 typedef struct
 {
+	uint64_t kernel_index;
 	uint64_t total_ram;
 }	_kernel_boot_info, *Kernel_Boot_Info;
+
+int kernel_main(Kernel_Boot_Info);
 
 #endif
