@@ -11,7 +11,10 @@ EFI_LDFLAGS	= -T /usr/lib/elf_x86_64_efi.lds -shared -Bsymbolic -L/usr/lib -lgnu
 
 all:				bin/bootx64.efi
 
-bin/bootx64.efi:	obj/efi_loader.o
+bin/bootx64.efi:	bin/bootx64.so
+	$(OBJCOPY) -j .text -j .sdata -j .data -j .dynamic -j .dynsym -j .rel -j .rela -j .reloc --target=efi-app-x86_64 $< $@
+
+bin/bootx64.so:		obj/efi_loader.o
 	$(LD) $(EFI_LDFLAGS) /usr/lib/crt0-efi-x86_64.o obj/efi_loader.o -o $@
 
 obj/efi_loader.o:	src/boot/efi_loader.c
