@@ -18,6 +18,14 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE image_handle, EFI_SYSTEM_TABLE *system_tab
 	Print(L"\tFirmware Vendor   : %s\n", system_table -> FirmwareVendor);
 	Print(L"\tFirmware Revision : %d\n", system_table -> FirmwareRevision);
 	Print(L"\tEFI Specification : %d.%02d\n", system_table -> Hdr.Revision >> 16, system_table -> Hdr.Revision & 0xFFFF);
-	while (true);
+
+	Print(L"\nPress any key to continue...");
+
+	EFI_INPUT_KEY Key;
+	system_table -> ConIn -> Reset(system_table -> ConIn, FALSE);
+
+	while (system_table -> ConIn -> ReadKeyStroke(system_table -> ConIn, &Key) == EFI_NOT_READY)
+		system_table->BootServices->Stall(10000);
+
 	return EFI_SUCCESS;
 }
