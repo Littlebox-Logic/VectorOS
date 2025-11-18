@@ -14,6 +14,11 @@
 Index kernel_count = 0;
 Kernel kernel_table[KERNEL_MAX_NUM] = {NULL};
 
+int kernel_scheduler_init(void)
+{
+	vfs_create("/sysinfo/kernel-count", 0, GRP_);
+}
+
 int kernel_fork(Kernel kernel)
 {
 	char kernel_file[32] = {'\0'};
@@ -28,6 +33,7 @@ int kernel_fork(Kernel kernel)
 
 void kernel_scheduler(void)
 {
+	kernel_scheduler_init();
 	kernel_fork(kernel_table[0]);
 	while (true);
 }

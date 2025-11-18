@@ -1,5 +1,5 @@
 /* VectorOS
- * File name		: cstdlib/math.h
+ * File name		: cstdlib/math.c
  * Creation date	: 2025/11/05 14:08 (Wed)
  */
 

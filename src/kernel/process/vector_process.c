@@ -9,9 +9,13 @@
 
 #include <stdbool.h>
 
-Pid_Index		_pid_pionner = 0;
-Pid_Index		*_pid_recycle_pool = NULL;
-Proc_Vec_Table	_process_vector_table[PROCESS_CAPACITY] = {NULL};
+#ifndef NULL
+#define NULL ((void *)0)
+#endif
+
+Pid_Index			_pid_pioneer = 0;
+Pid_Recycle_Pool	*_pid_recycle_pool = NULL;
+Proc_Vec_Table		_process_vector_table[PROCESS_CAPACITY] = {NULL};
 
 bool _pid_register_lock = false;
 
@@ -26,7 +30,7 @@ int process_fork(Process process, Pid_Index master_pid, User_Index user, enum Pr
 {
 	Pid_Recycle_Pool *temp_pid_node;
 
-	if ((process = (Process)kernel_malloc(sizeof(_process))))	return KERNEL_EXIT_FAILURE;
+	if ((process = (Process)kernel_malloc(sizeof(_Process))))	return KERNEL_EXIT_FAILURE;
 
 	while (true)
 	{
@@ -43,13 +47,13 @@ int process_fork(Process process, Pid_Index master_pid, User_Index user, enum Pr
 			}
 			else
 			{
-				if (pid_pioneer == PROCESS_CAPACITY - 1)
+				if (_pid_pioneer == PROCESS_CAPACITY - 1)
 				{
 					kernel_free(process);
 					_pid_register_lock = false;
 					return KERNEL_STANDABLE_WARN;
 				}
-				process -> pid = pid_pioneer ++;
+				process -> pid = _pid_pioneer ++;
 			}
 
 			_pid_register_lock = false;
@@ -89,7 +93,7 @@ int process_destroy(Pid_Index pid)
 
 				new_pid_node -> pid		= pid;
 				new_pid_node -> next	= _pid_recycle_pool;
-				_pid_recycle_pool		= _pid_new_node;
+				_pid_recycle_pool		= new_pid_node;
 			}
 
 			_pid_register_lock = false;

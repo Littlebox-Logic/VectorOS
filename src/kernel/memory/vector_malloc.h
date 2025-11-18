@@ -6,6 +6,8 @@
 #ifndef VECTOR_MALLOC_H
 #define VECTOR_MALLOC_H
 
+#include <stddef.h>
+
 void *kernel_malloc(size_t);
 int	 kernel_free(void *);
 

@@ -21,11 +21,13 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE image_handle, EFI_SYSTEM_TABLE *system_tab
 
 	Print(L"\nPress any key to continue...");
 
-	EFI_INPUT_KEY Key;
+	/*EFI_INPUT_KEY Key;
 	system_table -> ConIn -> Reset(system_table -> ConIn, FALSE);
 
 	while (system_table -> ConIn -> ReadKeyStroke(system_table -> ConIn, &Key) == EFI_NOT_READY)
 		system_table->BootServices->Stall(10000);
+*/
+	WaitForSingleEvent(system_table -> ConIn ->WaitForKey, 0);
 
 	return EFI_SUCCESS;
 }
