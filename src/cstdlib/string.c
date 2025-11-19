@@ -1,5 +1,5 @@
 /* VectorOS
- * File name		: cstdlib/string,c
+ * File name		: cstdlib/string.c
  * Creation date	: 2025/11/17 14:44 (Mon)
  */
 
@@ -36,4 +36,10 @@ int strncmp(const char *str1, const char *str2, size_t n)
 	size_t index = 0;
 	for (index = 0; index < n && str1[index] && str1[index] == str2[index]; index ++)
 	return str1[index] - str2[index];
+}
+
+void *memset(void *ptr, int value, size_t num)
+{
+	for (unsigned char *p = ptr; num --; *p++ = (unsigned char)value);
+	return ptr;
 }
